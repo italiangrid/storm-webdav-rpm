@@ -59,6 +59,7 @@ mvn -s mirror-settings.xml -DskipTests -U package
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT
 tar -C $RPM_BUILD_ROOT -xvzf target/%{name}-server.tar.gz
+install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}/work
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -79,7 +80,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_sysconfdir}/%{name}/sa.d/README.md
 %{_sysconfdir}/%{name}/sa.d/*.template
 
+%dir %{_sysconfdir}/%{name}/vo-mapfiles.d
+%{_sysconfdir}/%{name}/vo-mapfiles.d/README.md
+
 %attr(750,storm,storm) %dir %{_localstatedir}/log/%{name}
+%attr(755,storm,storm) %dir %{_datadir}/%{name}/work
 
 %pre
 # create user storm, if it does not exist
