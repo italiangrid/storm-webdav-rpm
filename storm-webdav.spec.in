@@ -3,7 +3,7 @@
 
 %global release_version 1
 
-%global pom_version 1.0.1
+%global pom_version 1.0.2
 %global mvn_settings -s mirror-settings.xml
 
 %if %{?build_number:1}%{!?build_number:0}
@@ -16,7 +16,7 @@
 %define prefixname storm
 
 Name:    storm-webdav
-Version: 1.0.1
+Version: 1.0.2
 Release: %{release_}
 Summary: The StoRM WebDAV server
 
