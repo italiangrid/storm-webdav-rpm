@@ -6,14 +6,15 @@
 %global pom_version 1.0.2
 %global mvn_settings -s mirror-settings.xml
 
+%global slash_name storm/webdav
+
 %if %{?build_number:1}%{!?build_number:0}
 %define release_ 0.build%{build_number}%{?dist}
 %else
 %define release_ %{release_version}%{?dist}
 %endif
 
-%define _modulename backend-server
-%define prefixname storm
+
 
 Name:    storm-webdav
 Version: 1.0.2
@@ -40,26 +41,24 @@ Requires(postun): initscripts
 Requires: java-1.7.0-openjdk
 Requires: jpackage-utils
 
-
 %description
 StoRM provides an SRM interface to any POSIX filesystem with direct file
 access ("file:" transport protocol), but can take advantage of special
 features of high performance parallel and cluster file systems, as GPFS from 
 IBM and Lustre from SUN. 
 
-This package contains the StoRM WebDAV server.
+This package provides the StoRM WebDAV server.
 
 %prep
 %setup -q -n %{name}
 
 %build
-mvn -s mirror-settings.xml -DskipTests -U package
+mvn -s mirror-settings.xml -DskipTests -U clean package
 
 %install
 rm -rf $RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT
 tar -C $RPM_BUILD_ROOT -xvzf target/%{name}-server.tar.gz
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}/work
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -72,19 +71,19 @@ rm -rf $RPM_BUILD_ROOT
 %{_javadir}/%{name}/%{name}-server.jar
 
 %config(noreplace) %{_sysconfdir}/sysconfig/%{name}
-%config(noreplace) %{_sysconfdir}/%{name}/logback.xml
-%config(noreplace) %{_sysconfdir}/%{name}/logback-access.xml
-%{_sysconfdir}/%{name}/README.md
+%config(noreplace) %{_sysconfdir}/%{slash_name}/logback.xml
+%config(noreplace) %{_sysconfdir}/%{slash_name}/logback-access.xml
+%{_sysconfdir}/%{slash_name}/README.md
 
-%dir %{_sysconfdir}/%{name}/sa.d
-%{_sysconfdir}/%{name}/sa.d/README.md
-%{_sysconfdir}/%{name}/sa.d/*.template
+%dir %{_sysconfdir}/%{slash_name}/sa.d
+%{_sysconfdir}/%{slash_name}/sa.d/README.md
+%{_sysconfdir}/%{slash_name}/sa.d/*.template
 
-%dir %{_sysconfdir}/%{name}/vo-mapfiles.d
-%{_sysconfdir}/%{name}/vo-mapfiles.d/README.md
+%dir %{_sysconfdir}/%{slash_name}/vo-mapfiles.d
+%{_sysconfdir}/%{slash_name}/vo-mapfiles.d/README.md
 
-%attr(750,storm,storm) %dir %{_localstatedir}/log/%{name}
-%attr(755,storm,storm) %dir %{_datadir}/%{name}/work
+%attr(750,storm,storm) %dir %{_localstatedir}/log/%{slash_name}
+%attr(755,storm,storm) %dir %{_localstatedir}/lib/%{name}/work
 
 %pre
 # create user storm, if it does not exist
