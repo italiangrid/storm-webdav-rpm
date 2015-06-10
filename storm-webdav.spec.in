@@ -1,7 +1,7 @@
 ## Turn off meaningless jar repackaging 
 %define __jar_repack 0
 
-%global release_version 1
+%global release_version 2
 
 %global pom_version 1.0.3
 %global mvn_settings -s mirror-settings.xml
@@ -13,8 +13,6 @@
 %else
 %define release_ %{release_version}%{?dist}
 %endif
-
-
 
 Name:    storm-webdav
 Version: 1.0.3
@@ -112,5 +110,6 @@ if [ "$1" = "0" ] ; then
 fi
 
 %changelog
+
 * Mon Sep 1 2014 Andrea Ceccanti <andrea.ceccanti at cnaf.infn.it> - 1.0.0-0
 - Initial packaging
