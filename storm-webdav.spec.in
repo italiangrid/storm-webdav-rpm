@@ -1,7 +1,7 @@
 ## Turn off meaningless jar repackaging 
 %define __jar_repack 0
 
-%global release_version 2
+%global release_version 1
 
 %global pom_version 1.0.4
 %global mvn_settings -s mirror-settings.xml
